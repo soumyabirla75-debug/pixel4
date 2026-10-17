@@ -99,6 +99,7 @@ body { font-family: var(--font-sans); background: var(--bg-primary); color: var(
     <nav>
       <ul class="nav-links">
         <li><button class="nav-tab active" data-tab="landing" onclick="switchTab('landing')">Overview</button></li>
+        <li><button class="nav-tab" data-tab="playground" onclick="switchTab('playground')">Playground</button></li>
         <li><button class="nav-tab" data-tab="quiz" onclick="switchTab('quiz')">Quiz Demo</button></li>
         <li><button class="nav-tab" data-tab="stickies" onclick="switchTab('stickies')">Sticky Board</button></li>
       </ul>
@@ -115,16 +116,53 @@ body { font-family: var(--font-sans); background: var(--bg-primary); color: var(
   <main id="view-landing" class="view-section active">
     <section class="hero">
       <div class="hero-pill">⚡ Ultra-Lightweight &middot; Authoritative Sync</div>
-      <h1>QUIZ MANIA <br><span class="gradient-text">Multiplayer Game</span></h1>
+      <h1>Make any web page <br><span class="gradient-text">multiplayer in 10 lines.</span></h1>
       <p style="color:var(--text-secondary); margin:1.5rem 0 2rem;">Zero external dependencies. Server-assigned monotonic sequences. Optimistic UI and automatic offline pending queue flush.</p>
       <div style="display:flex; justify-content:center; gap:14px;">
-       
+        <button class="btn-primary" onclick="switchTab('playground')">Launch Playground &rarr;</button>
         <button class="btn-secondary" onclick="switchTab('quiz')">Live Quiz Arena</button>
       </div>
     </section>
   </main>
 
-
+  <!-- PLAYGROUND -->
+  <section id="view-playground" class="view-section">
+    <div class="room-bar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span>Room:</span>
+        <span id="currentRoomTag" class="room-id-tag">loading...</span>
+        <button class="btn-secondary" onclick="copyRoomLink()">🔗 Copy Link</button>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-secondary" onclick="room.undo()">↩️ Undo</button>
+        <button class="btn-secondary" onclick="room.redo()">↪️ Redo</button>
+        <button class="btn-chaos" onclick="simulateChaosDisconnect()">⚡ Simulate 4s Disconnect</button>
+      </div>
+    </div>
+    <div class="playground-grid">
+      <div class="panel-card">
+        <h3 style="margin-bottom:1rem;">Interactive Shared Canvas</h3>
+        <label style="font-weight:600; font-size:0.9rem;">Shared Input Box:</label>
+        <input type="text" id="sharedTextInput" placeholder="Type here in any connected tab..." style="width:100%; padding:10px; margin:8px 0 16px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-secondary); color:#fff;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span>Counter:</span>
+          <button class="btn-secondary" onclick="adjustCounter(-1)">-</button>
+          <span id="sharedCounterVal" style="font-size:1.4rem; font-weight:700; font-family:var(--font-mono);">0</span>
+          <button class="btn-secondary" onclick="adjustCounter(1)">+</button>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button style="font-size:1.5rem; background:none; border:none; cursor:pointer;" onclick="room.react('🔥')">🔥</button>
+          <button style="font-size:1.5rem; background:none; border:none; cursor:pointer;" onclick="room.react('❤️')">❤️</button>
+          <button style="font-size:1.5rem; background:none; border:none; cursor:pointer;" onclick="room.react('🚀')">🚀</button>
+          <button style="font-size:1.5rem; background:none; border:none; cursor:pointer;" onclick="room.react('🎉')">🎉</button>
+        </div>
+      </div>
+      <div class="panel-card">
+        <h3 style="margin-bottom:1rem;">Active Presence</h3>
+        <div id="usersListContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
+      </div>
+    </div>
+  </section>
 
   <!-- QUIZ -->
   <section id="view-quiz" class="view-section">
